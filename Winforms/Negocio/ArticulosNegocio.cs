@@ -4,10 +4,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dominio;
 
-namespace TP_Articulos
+namespace Negocio
 {
-    class ArticulosNegocio
+    public class ArticulosNegocio
     {
         public List<Articulos> listar()
         {
@@ -19,7 +20,7 @@ namespace TP_Articulos
 
             try
             {
-                conexion.ConnectionString = "server=.\\SQLLab3; database=CATALOGO_P3_DB; integrated security=true";
+                conexion.ConnectionString = "server=.\\SQLEXPRESS; database=CATALOGO_P3_DB; integrated security=true";
                 comando.CommandType = System.Data.CommandType.Text;
                 comando.CommandText = "SELECT A.Id ID,A.Codigo, A.Nombre, A.Descripcion, M.Descripcion Marca, C.Descripcion Categoria, A.Precio, I.ImagenUrl Imagen from ARTICULOS A, MARCAS M, CATEGORIAS C, IMAGENES I WHERE A.IdMarca = M.Id AND A.IdCategoria = C.Id AND A.Id = I.IdArticulo";
 
