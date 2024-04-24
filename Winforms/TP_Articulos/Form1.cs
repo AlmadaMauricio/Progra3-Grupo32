@@ -12,10 +12,10 @@ using Negocio;
 
 namespace TP_Articulos
 {
-    public partial class Form1 : Form
+    public partial class ListaDeArticulo : Form
     {
         private List<Articulos> listaArticulos;
-        public Form1()
+        public ListaDeArticulo()
         {
             InitializeComponent();
         }
@@ -47,5 +47,9 @@ namespace TP_Articulos
             }
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
