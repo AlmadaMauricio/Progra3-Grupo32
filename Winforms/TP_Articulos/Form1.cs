@@ -74,5 +74,11 @@ namespace TP_Articulos
             dgvArticulos.DataSource = listaFiltrada;
             ocultarColumnas();
         }
+
+        private void btnAgregarArticulo_Click(object sender, EventArgs e)
+        {
+            frmAltaArticulo alta = new frmAltaArticulo();
+            alta.ShowDialog();
+        }
     }
 }

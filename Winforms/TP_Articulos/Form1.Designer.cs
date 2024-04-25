@@ -43,52 +43,50 @@
             // dgvArticulos
             // 
             this.dgvArticulos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvArticulos.Location = new System.Drawing.Point(35, 50);
-            this.dgvArticulos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dgvArticulos.Location = new System.Drawing.Point(26, 41);
+            this.dgvArticulos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dgvArticulos.Name = "dgvArticulos";
             this.dgvArticulos.RowHeadersWidth = 51;
             this.dgvArticulos.RowTemplate.Height = 24;
-            this.dgvArticulos.Size = new System.Drawing.Size(1005, 290);
+            this.dgvArticulos.Size = new System.Drawing.Size(754, 236);
             this.dgvArticulos.TabIndex = 0;
             this.dgvArticulos.SelectionChanged += new System.EventHandler(this.dgvArticulos_SelectionChanged);
             // 
             // pbxArticulos
             // 
             this.pbxArticulos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbxArticulos.Location = new System.Drawing.Point(1076, 75);
-            this.pbxArticulos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pbxArticulos.Location = new System.Drawing.Point(807, 61);
+            this.pbxArticulos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pbxArticulos.Name = "pbxArticulos";
-            this.pbxArticulos.Size = new System.Drawing.Size(223, 229);
+            this.pbxArticulos.Size = new System.Drawing.Size(167, 186);
             this.pbxArticulos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbxArticulos.TabIndex = 1;
             this.pbxArticulos.TabStop = false;
             // 
             // btnAgregarArticulo
             // 
-            this.btnAgregarArticulo.Location = new System.Drawing.Point(35, 612);
-            this.btnAgregarArticulo.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAgregarArticulo.Location = new System.Drawing.Point(26, 497);
             this.btnAgregarArticulo.Name = "btnAgregarArticulo";
-            this.btnAgregarArticulo.Size = new System.Drawing.Size(184, 28);
+            this.btnAgregarArticulo.Size = new System.Drawing.Size(138, 23);
             this.btnAgregarArticulo.TabIndex = 3;
             this.btnAgregarArticulo.Text = "Agregar Articulo";
             this.btnAgregarArticulo.UseVisualStyleBackColor = true;
+            this.btnAgregarArticulo.Click += new System.EventHandler(this.btnAgregarArticulo_Click);
             // 
             // btnModificarArticulo
             // 
-            this.btnModificarArticulo.Location = new System.Drawing.Point(35, 502);
-            this.btnModificarArticulo.Margin = new System.Windows.Forms.Padding(4);
+            this.btnModificarArticulo.Location = new System.Drawing.Point(26, 408);
             this.btnModificarArticulo.Name = "btnModificarArticulo";
-            this.btnModificarArticulo.Size = new System.Drawing.Size(184, 28);
+            this.btnModificarArticulo.Size = new System.Drawing.Size(138, 23);
             this.btnModificarArticulo.TabIndex = 4;
             this.btnModificarArticulo.Text = "Modificar Articulo";
             this.btnModificarArticulo.UseVisualStyleBackColor = true;
             // 
             // btnEliminarArticulo
             // 
-            this.btnEliminarArticulo.Location = new System.Drawing.Point(35, 560);
-            this.btnEliminarArticulo.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEliminarArticulo.Location = new System.Drawing.Point(26, 455);
             this.btnEliminarArticulo.Name = "btnEliminarArticulo";
-            this.btnEliminarArticulo.Size = new System.Drawing.Size(184, 28);
+            this.btnEliminarArticulo.Size = new System.Drawing.Size(138, 23);
             this.btnEliminarArticulo.TabIndex = 5;
             this.btnEliminarArticulo.Text = "Eliminar Articulo";
             this.btnEliminarArticulo.UseVisualStyleBackColor = true;
@@ -96,37 +94,34 @@
             // lblFiltro
             // 
             this.lblFiltro.AutoSize = true;
-            this.lblFiltro.Location = new System.Drawing.Point(41, 377);
-            this.lblFiltro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFiltro.Location = new System.Drawing.Point(31, 306);
             this.lblFiltro.Name = "lblFiltro";
-            this.lblFiltro.Size = new System.Drawing.Size(42, 16);
+            this.lblFiltro.Size = new System.Drawing.Size(35, 13);
             this.lblFiltro.TabIndex = 6;
             this.lblFiltro.Text = "Filtro :";
             // 
             // txtFiltro
             // 
-            this.txtFiltro.Location = new System.Drawing.Point(140, 368);
-            this.txtFiltro.Margin = new System.Windows.Forms.Padding(4);
+            this.txtFiltro.Location = new System.Drawing.Point(105, 299);
             this.txtFiltro.Name = "txtFiltro";
-            this.txtFiltro.Size = new System.Drawing.Size(399, 22);
+            this.txtFiltro.Size = new System.Drawing.Size(300, 20);
             this.txtFiltro.TabIndex = 7;
             this.txtFiltro.TextChanged += new System.EventHandler(this.txtFiltro_TextChanged);
             // 
             // btnDetalleArticulo
             // 
-            this.btnDetalleArticulo.Location = new System.Drawing.Point(35, 443);
-            this.btnDetalleArticulo.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDetalleArticulo.Location = new System.Drawing.Point(26, 360);
             this.btnDetalleArticulo.Name = "btnDetalleArticulo";
-            this.btnDetalleArticulo.Size = new System.Drawing.Size(184, 28);
+            this.btnDetalleArticulo.Size = new System.Drawing.Size(138, 23);
             this.btnDetalleArticulo.TabIndex = 8;
             this.btnDetalleArticulo.Text = "Detalle del Articulo";
             this.btnDetalleArticulo.UseVisualStyleBackColor = true;
             // 
             // ListaDeArticulo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1625, 695);
+            this.ClientSize = new System.Drawing.Size(1219, 565);
             this.Controls.Add(this.btnDetalleArticulo);
             this.Controls.Add(this.txtFiltro);
             this.Controls.Add(this.lblFiltro);
@@ -135,7 +130,7 @@
             this.Controls.Add(this.btnAgregarArticulo);
             this.Controls.Add(this.pbxArticulos);
             this.Controls.Add(this.dgvArticulos);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "ListaDeArticulo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lista de articulos";
