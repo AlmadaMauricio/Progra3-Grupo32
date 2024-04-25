@@ -44,7 +44,7 @@
             // 
             this.dgvArticulos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvArticulos.Location = new System.Drawing.Point(26, 41);
-            this.dgvArticulos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvArticulos.Margin = new System.Windows.Forms.Padding(2);
             this.dgvArticulos.Name = "dgvArticulos";
             this.dgvArticulos.RowHeadersWidth = 51;
             this.dgvArticulos.RowTemplate.Height = 24;
@@ -56,7 +56,7 @@
             // 
             this.pbxArticulos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pbxArticulos.Location = new System.Drawing.Point(807, 61);
-            this.pbxArticulos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pbxArticulos.Margin = new System.Windows.Forms.Padding(2);
             this.pbxArticulos.Name = "pbxArticulos";
             this.pbxArticulos.Size = new System.Drawing.Size(167, 186);
             this.pbxArticulos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -90,6 +90,7 @@
             this.btnEliminarArticulo.TabIndex = 5;
             this.btnEliminarArticulo.Text = "Eliminar Articulo";
             this.btnEliminarArticulo.UseVisualStyleBackColor = true;
+            this.btnEliminarArticulo.Click += new System.EventHandler(this.btnEliminarArticulo_Click);
             // 
             // lblFiltro
             // 
@@ -130,7 +131,7 @@
             this.Controls.Add(this.btnAgregarArticulo);
             this.Controls.Add(this.pbxArticulos);
             this.Controls.Add(this.dgvArticulos);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ListaDeArticulo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lista de articulos";

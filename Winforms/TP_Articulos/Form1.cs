@@ -20,6 +20,27 @@ namespace TP_Articulos
             InitializeComponent();
         }
 
+        private int indice = 0;
+        private List<Articulos> articulos;
+       
+
+        private void ListarArticulos()
+        {
+            ArticulosNegocio art = new ArticulosNegocio();
+            try
+            {
+                articulos = art.listar();
+                dgvArticulos.DataSource = articulos;
+                dgvArticulos.Columns["Id"].Visible = false;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
         private void Form1_Load(object sender, EventArgs e) 
         {
             ArticulosNegocio negocio = new ArticulosNegocio();
@@ -79,6 +100,34 @@ namespace TP_Articulos
         {
             frmAltaArticulo alta = new frmAltaArticulo();
             alta.ShowDialog();
+        }
+
+        private void btnEliminarArticulo_Click(object sender, EventArgs e)
+        {
+            ArticulosNegocio negocio = new ArticulosNegocio();
+            Articulos seleccionado;
+            try
+            {
+                if (dgvArticulos.CurrentRow != null)
+                    seleccionado = (Articulos)dgvArticulos.CurrentRow.DataBoundItem;
+                else
+                {
+                    MessageBox.Show("No ha seleccionado ningun articulo");
+                    return;
+                }
+                DialogResult respuesta = MessageBox.Show("Usted quiere eliminar este articulo?", "Eliminando", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (respuesta == DialogResult.Yes)
+                {
+                    negocio.eliminarArticulo(seleccionado.IdArticulo);
+                    ListarArticulos();
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }
