@@ -46,5 +46,22 @@ namespace TP_Articulos
         {
             Close();
         }
+
+        private void frmAltaArticulo_Load(object sender, EventArgs e)
+        {
+
+            CatgoriaNegocio categoriaNegocio = new CatgoriaNegocio();
+            MarcaNegocio marcaNegocio = new MarcaNegocio();
+            try
+            {
+                cbxCategoria.DataSource = categoriaNegocio.listar();
+                cbxMarca.DataSource = marcaNegocio.listar();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+        }
     }
 }
