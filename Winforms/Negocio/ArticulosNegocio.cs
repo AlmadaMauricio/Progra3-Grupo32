@@ -20,7 +20,7 @@ namespace Negocio
 
             try
             {
-                conexion.ConnectionString = "server=.\\SQLEXPRESS; database=CATALOGO_P3_DB; integrated security=true";
+                conexion.ConnectionString = "server=.\\SQLLab3; database=CATALOGO_P3_DB; integrated security=true";
                 comando.CommandType = System.Data.CommandType.Text;
                 comando.CommandText = "SELECT A.Id ID,A.Codigo, A.Nombre, A.Descripcion, M.Descripcion Marca, C.Descripcion Categoria, A.Precio, I.ImagenUrl Imagen from ARTICULOS A, MARCAS M, CATEGORIAS C, IMAGENES I WHERE A.IdMarca = M.Id AND A.IdCategoria = C.Id AND A.Id = I.IdArticulo";
 
@@ -33,16 +33,29 @@ namespace Negocio
                 {
                     Articulos aux = new Articulos();
                     aux.IdArticulo = (int)lector["ID"];
-                    aux.Codigo = (string)lector["Codigo"];
-                    aux.Nombre = (string)lector["Nombre"];
-                    aux.Descripcion = (string)lector["Descripcion"];
+
+                    if (!(lector["Codigo"] is DBNull))
+                        aux.Codigo = (string)lector["Codigo"];
+
+                    if (!(lector["Nombre"] is DBNull))
+                        aux.Nombre = (string)lector["Nombre"];
+
+                    if (!(lector["Descripcion"] is DBNull))
+                        aux.Descripcion = (string)lector["Descripcion"];
+
                     aux.Marcas = new Marcas();
-                    aux.Marcas.DescripcionMarca = (string)lector["Marca"];
+                    if (!(lector["Marca"] is DBNull))
+                        aux.Marcas.DescripcionMarca = (string)lector["Marca"];
+
                     aux.Categoria = new Categoria();
-                    aux.Categoria.DescripcionCategoria = (string)lector["Categoria"];
+                    if (!(lector["Categoria"] is DBNull))
+                        aux.Categoria.DescripcionCategoria = (string)lector["Categoria"];
+
                     aux.imagenes = new Imagenes();
                     aux.imagenes.ImagenUrl = (string)lector["Imagen"];
-                    aux.Precio = (float)(decimal)lector["Precio"];
+
+                    if (!(lector["Precio"] is DBNull))
+                        aux.Precio = (float)(decimal)lector["Precio"];
 
                     lista.Add(aux);
                 }
