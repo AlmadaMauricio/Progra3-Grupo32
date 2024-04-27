@@ -31,6 +31,8 @@ namespace TP_Articulos
                 nuevo.Descripcion = txtDescripcion.Text;
                 nuevo.Marcas = (Marcas)cbxMarca.SelectedItem;
                 nuevo.Categoria = (Categoria)cbxCategoria.SelectedItem;
+                //nuevo.imagenes.ImagenUrl = txbImagen.Text;
+                nuevo.Precio = float.Parse(txbPrecio.Text);
 
                 negocio.agregar(nuevo);
                 MessageBox.Show("Agregado exitosamente");
