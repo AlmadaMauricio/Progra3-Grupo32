@@ -29,6 +29,8 @@ namespace TP_Articulos
                 nuevo.Codigo = txtCodigo.Text;
                 nuevo.Nombre = txtNombre.Text;
                 nuevo.Descripcion = txtDescripcion.Text;
+                nuevo.Marcas = (Marcas)cbxMarca.SelectedItem;
+                nuevo.Categoria = (Categoria)cbxCategoria.SelectedItem;
 
                 negocio.agregar(nuevo);
                 MessageBox.Show("Agregado exitosamente");
