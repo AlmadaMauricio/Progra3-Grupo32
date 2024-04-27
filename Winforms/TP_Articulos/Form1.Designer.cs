@@ -117,6 +117,7 @@
             this.btnDetalleArticulo.TabIndex = 8;
             this.btnDetalleArticulo.Text = "Detalle del Articulo";
             this.btnDetalleArticulo.UseVisualStyleBackColor = true;
+            this.btnDetalleArticulo.Click += new System.EventHandler(this.btnDetalleArticulo_Click_1);
             // 
             // ListaDeArticulo
             // 

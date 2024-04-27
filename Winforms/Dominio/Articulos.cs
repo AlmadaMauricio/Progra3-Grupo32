@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Dominio
 {
@@ -17,6 +20,20 @@ namespace Dominio
         public Categoria Categoria { get; set; }
         public float Precio { get; set; }
         public Imagenes imagenes { get; set; }
+        /// 
+
+
+
+
+
+        [DisplayName("Marca")]
+        public Marcas NombreMarca { get; set; }
+
+        [DisplayName("Categoria")]
+        public Categoria TipoCategoria { set; get; }
+
+        public List<Imagenes> UrlImagen { set; get; }
+
 
     }
 }

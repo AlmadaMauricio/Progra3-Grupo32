@@ -22,6 +22,7 @@ namespace TP_Articulos
 
         private int indice = 0;
         private List<Articulos> articulos;
+        private Articulos seleccion;
        
 
         private void ListarArticulos()
@@ -31,7 +32,8 @@ namespace TP_Articulos
             {
                 articulos = art.listar();
                 dgvArticulos.DataSource = articulos;
-                dgvArticulos.Columns["Id"].Visible = false;
+                dgvArticulos.Columns["id"].Visible = false;
+
             }
             catch (Exception ex)
             {
@@ -125,6 +127,22 @@ namespace TP_Articulos
 
             }
             catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private void btnDetalleArticulo_Click_1(object sender, EventArgs e)
+        {
+            ArticulosNegocio art = new ArticulosNegocio();
+
+            try
+            {
+                using (DetalleArticulo ventanaDarticulo = new DetalleArticulo(seleccion))
+                    ventanaDarticulo.ShowDialog();
+                ListarArticulos();
+
+            }
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
