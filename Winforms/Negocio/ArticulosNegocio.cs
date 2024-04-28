@@ -76,12 +76,15 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("INSERT INTO ARTICULOS (Codigo, Nombre, Descripcion, IdMarca, IdCategoria) VALUES (@Codigo, @Nombre, @Descripcion, @IdMarca, @IdCategoria)");
+                //A la query tambien falta agregar el parametro de url. Pendiente
+                datos.setearConsulta("INSERT INTO ARTICULOS (Codigo, Nombre, Descripcion, IdMarca, IdCategoria, Precio) VALUES (@Codigo, @Nombre, @Descripcion, @IdMarca, @IdCategoria, @Precio)");
                 datos.setearParametros("@Codigo", nuevo.Codigo);
                 datos.setearParametros("@Nombre", nuevo.Nombre);
                 datos.setearParametros("@Descripcion", nuevo.Descripcion);
                 datos.setearParametros("@IdMarca", nuevo.Marcas.IdMarca);
                 datos.setearParametros("@IdCategoria", nuevo.Categoria.IdCategoria);
+                //datos.SetearParametros("@ImagenUrl", nuevo.imagenes.ImagenUrl);
+                datos.setearParametros("@Precio", nuevo.Precio);
                 datos.ejecutarAccion();
 
             }
