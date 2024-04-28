@@ -145,16 +145,24 @@ namespace TP_Articulos
         }
         private void btnDetalleArticulo_Click_1(object sender, EventArgs e)
         {
+
             ArticulosNegocio art = new ArticulosNegocio();
+            ArticulosNegocio negocio = new ArticulosNegocio();
+            Articulos seleccionado;
 
             try
             {
-                using (DetalleArticulo ventanaDarticulo = new DetalleArticulo(seleccion))
-                    ventanaDarticulo.ShowDialog();
-                ListarArticulos();
+                if (dgvArticulos.CurrentRow != null)
+                    seleccionado = (Articulos)dgvArticulos.CurrentRow.DataBoundItem;
+                else
+                {
+                    MessageBox.Show("No ha seleccionado ningun articulo");
+                    return;
+                }
 
+                using (DetalleArticulo ventanaDarticulo = new DetalleArticulo(seleccionado)) ventanaDarticulo.ShowDialog();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }

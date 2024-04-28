@@ -41,28 +41,18 @@ namespace TP_Articulos
                 }
                 else
                 {
-                    lblMarcaDA.Text = "Desconocida";
+                    lblMarcaDA.Text = "DESCONOCIDA";
                 }
-
-                if (articulo.TipoCategoria != null)
+                if (articulo.Categoria != null)
                 {
-                    lblCategoriaDA.Text = articulo.TipoCategoria.DescripcionCategoria;
+                    lblCategoriaDA.Text = articulo.Categoria.DescripcionCategoria;
                 }
                 else
                 {
-                    lblCategoriaDA.Text = "Desconocida";
+                    lblCategoriaDA.Text = "DESCONOCIDA";
                 }
-                //if (articulo.UrlImagen != null && articulo.UrlImagen.Count > 0)
-                //{
-                //    ptbImagenDA.Load(articulo.UrlImagen[0].Url);
-                //}
-                //else
-                //{
-                //    ptbImagenDA.Image = null;
-                //}
                 if (articulo.UrlImagen != null)
                 {
-
                     imagenes = articulo.UrlImagen;
                     CargarImagenes();
                 }
