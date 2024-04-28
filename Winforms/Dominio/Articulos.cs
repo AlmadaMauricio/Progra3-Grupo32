@@ -13,8 +13,10 @@ namespace Dominio
     {
         public int IdArticulo { get; set; }
 
+        [DisplayName("Código")]
         public string Codigo { get; set; }
         public string Nombre { get; set; }
+        [DisplayName("Descripción")]
         public string Descripcion { get; set; }
         public Marcas Marcas { get; set; }
         public Categoria Categoria { get; set; }
