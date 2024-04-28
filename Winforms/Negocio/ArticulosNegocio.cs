@@ -23,7 +23,6 @@ namespace Negocio
                 conexion.ConnectionString = "server=.\\SQLLab3; database=CATALOGO_P3_DB; integrated security=true";
                 comando.CommandType = System.Data.CommandType.Text;
                 comando.CommandText = "SELECT A.Id ID,A.Codigo, A.Nombre, A.Descripcion, M.Descripcion Marca, C.Descripcion Categoria, A.Precio, I.ImagenUrl Imagen from ARTICULOS A, MARCAS M, CATEGORIAS C, IMAGENES I WHERE A.IdMarca = M.Id AND A.IdCategoria = C.Id AND A.Id = I.IdArticulo";
-
                 comando.Connection = conexion;
 
                 conexion.Open();
@@ -70,7 +69,7 @@ namespace Negocio
 
         }
 
-        public void agregar(Articulos nuevo)
+        public void agregar(Articulos nuevo, Imagenes nueva)
         {
             AccesoDatos datos = new AccesoDatos();
 
@@ -83,10 +82,11 @@ namespace Negocio
                 datos.setearParametros("@Descripcion", nuevo.Descripcion);
                 datos.setearParametros("@IdMarca", nuevo.Marcas.IdMarca);
                 datos.setearParametros("@IdCategoria", nuevo.Categoria.IdCategoria);
-                //datos.SetearParametros("@ImagenUrl", nuevo.imagenes.ImagenUrl);
-                datos.setearParametros("@Precio", nuevo.Precio);
+                datos.setearConsulta("INSERT INTO IMAGENES (ImagenUrl) VALUES (@ImagenUrl)");
+                datos.SetearParametros("@ImagenUrl", nueva.ImagenUrl);
+                datos.setearParametros("@Precio", nuevo.Precio);    
                 datos.ejecutarAccion();
-
+ 
             }
             catch (Exception ex)
             {

@@ -23,6 +23,8 @@ namespace TP_Articulos
         {
             Articulos nuevo = new Articulos();
             ArticulosNegocio negocio = new ArticulosNegocio();
+            Imagenes Im = new Imagenes();
+            ImagenesNegocio imagenesNegocio = new ImagenesNegocio();
 
             try
             {
@@ -31,10 +33,10 @@ namespace TP_Articulos
                 nuevo.Descripcion = txtDescripcion.Text;
                 nuevo.Marcas = (Marcas)cbxMarca.SelectedItem;
                 nuevo.Categoria = (Categoria)cbxCategoria.SelectedItem;
-                //nuevo.imagenes.ImagenUrl = txbImagen.Text;
+                Im.ImagenUrl = txbImagen.Text;
                 nuevo.Precio = float.Parse(txbPrecio.Text);
 
-                negocio.agregar(nuevo);
+                negocio.agregar(nuevo, Im);
                 MessageBox.Show("Agregado exitosamente");
                 Close();
             }
@@ -65,6 +67,22 @@ namespace TP_Articulos
             {
 
                 MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void txbImagen_Leave(object sender, EventArgs e)
+        {
+            cargarImagen(txbImagen.Text);
+        }
+        private void cargarImagen(string imagen)
+        {
+            try
+            {
+                pbxImagen.Load(imagen);
+            }
+            catch (Exception ex)
+            {
+                pbxImagen.Load("https://i0.wp.com/sunrisedaycamp.org/wp-content/uploads/2020/10/placeholder.png?ssl=1");
             }
         }
     }
