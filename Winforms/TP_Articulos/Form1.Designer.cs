@@ -43,6 +43,7 @@
             this.cboCriterio = new System.Windows.Forms.ComboBox();
             this.txtFiltroAvanzado = new System.Windows.Forms.TextBox();
             this.btnBuscar = new System.Windows.Forms.Button();
+            this.btnSalir = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxArticulos)).BeginInit();
             this.SuspendLayout();
@@ -93,6 +94,7 @@
             this.btnModificarArticulo.TabIndex = 4;
             this.btnModificarArticulo.Text = "Modificar Articulo";
             this.btnModificarArticulo.UseVisualStyleBackColor = true;
+            this.btnModificarArticulo.Click += new System.EventHandler(this.btnModificarArticulo_Click);
             // 
             // btnEliminarArticulo
             // 
@@ -199,11 +201,23 @@
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
+            // btnSalir
+            // 
+            this.btnSalir.Location = new System.Drawing.Point(701, 670);
+            this.btnSalir.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(184, 28);
+            this.btnSalir.TabIndex = 16;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            // 
             // ListaDeArticulo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1625, 695);
+            this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.txtFiltroAvanzado);
             this.Controls.Add(this.cboCriterio);
@@ -249,6 +263,7 @@
         private System.Windows.Forms.ComboBox cboCriterio;
         private System.Windows.Forms.TextBox txtFiltroAvanzado;
         private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.Button btnSalir;
     }
 }
 

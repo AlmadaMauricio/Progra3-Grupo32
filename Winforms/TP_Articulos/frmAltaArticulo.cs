@@ -14,30 +14,48 @@ namespace TP_Articulos
 {
     public partial class frmAltaArticulo : Form
     {
+        private Articulos articulo = null;
         public frmAltaArticulo()
         {
             InitializeComponent();
         }
-
+        public frmAltaArticulo(Articulos articulo)
+        {
+            InitializeComponent();
+            this.articulo = articulo;
+            Text = "Modificar Articulo";
+        }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            Articulos nuevo = new Articulos();
             ArticulosNegocio negocio = new ArticulosNegocio();
             Imagenes Im = new Imagenes();
             ImagenesNegocio imagenesNegocio = new ImagenesNegocio();
 
             try
             {
-                nuevo.Codigo = txtCodigo.Text;
-                nuevo.Nombre = txtNombre.Text;
-                nuevo.Descripcion = txtDescripcion.Text;
-                nuevo.Marcas = (Marcas)cbxMarca.SelectedItem;
-                nuevo.Categoria = (Categoria)cbxCategoria.SelectedItem;
-                Im.ImagenUrl = txbImagen.Text;
-                nuevo.Precio = float.Parse(txbPrecio.Text);
+                if(articulo == null)
+                    articulo = new Articulos();
 
-                negocio.agregar(nuevo, Im);
-                MessageBox.Show("Agregado exitosamente");
+                articulo.Codigo = txtCodigo.Text;
+                articulo.Nombre = txtNombre.Text;
+                articulo.Descripcion = txtDescripcion.Text;
+                articulo.Marcas = (Marcas)cbxMarca.SelectedItem;
+                articulo.Categoria = (Categoria)cbxCategoria.SelectedItem;
+                //Im.ImagenUrl = txbImagen.Text;
+                articulo.Precio = float.Parse(txbPrecio.Text);
+
+                if(articulo.IdArticulo != 0)
+                {
+                    negocio.modificar(articulo);
+                    MessageBox.Show("Modificado exitosamente");
+
+                }
+                else
+                {
+                    negocio.agregar(articulo, Im);
+                    MessageBox.Show("Agregado exitosamente");
+                }
+                
                 Close();
             }
             catch (Exception ex)
@@ -61,7 +79,22 @@ namespace TP_Articulos
             try
             {
                 cbxCategoria.DataSource = categoriaNegocio.listar();
+                cbxCategoria.ValueMember = "IdCategoria";
+                cbxCategoria.DisplayMember = "DescripcionCategoria";
                 cbxMarca.DataSource = marcaNegocio.listar();
+                cbxMarca.ValueMember = "IdMarca";
+                cbxMarca.DisplayMember = "DescripcionMarca";
+
+                if (articulo !=  null )
+                {
+                    txtCodigo.Text = articulo.Codigo;
+                    txtNombre.Text = articulo.Nombre;
+                    txtDescripcion.Text = articulo.Descripcion;
+                    txbPrecio.Text = articulo.Precio.ToString();
+                    cargarImagen(articulo.imagenes.ImagenUrl);
+                    cbxCategoria.SelectedValue = articulo.IdCategoria;
+                    cbxMarca.SelectedValue = articulo.IdMarca;
+                }//
             }
             catch (Exception ex)
             {

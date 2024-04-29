@@ -77,6 +77,9 @@ namespace TP_Articulos
         {
             dgvArticulos.Columns["imagenes"].Visible = false;
             dgvArticulos.Columns["IdArticulo"].Visible = false;
+            dgvArticulos.Columns["IdCategoria"].Visible = false;
+            dgvArticulos.Columns["IdMarca"].Visible = false;
+
         }
 
         private void cargarImagen(string imagen)
@@ -114,6 +117,16 @@ namespace TP_Articulos
         {
             frmAltaArticulo alta = new frmAltaArticulo();
             alta.ShowDialog();
+            cargar();
+        }
+        private void btnModificarArticulo_Click(object sender, EventArgs e)
+        {
+            Articulos seleccionado;
+            seleccionado = (Articulos)dgvArticulos.CurrentRow.DataBoundItem;
+
+            frmAltaArticulo modificar = new frmAltaArticulo(seleccionado);
+            modificar.ShowDialog();
+            cargar();
         }
 
         private void btnEliminarArticulo_Click(object sender, EventArgs e)
@@ -201,6 +214,11 @@ namespace TP_Articulos
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

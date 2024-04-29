@@ -20,9 +20,9 @@ namespace Negocio
 
             try
             {
-                conexion.ConnectionString = "server=Sgarcia\\SQLEXPRESS; database=CATALOGO_P3_DB; integrated security=true";
+                conexion.ConnectionString = "server=.\\SQLLab3; database=CATALOGO_P3_DB; integrated security=true";
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "SELECT A.Id ID,A.Codigo, A.Nombre, A.Descripcion, M.Descripcion Marca, C.Descripcion Categoria, A.Precio, I.ImagenUrl Imagen from ARTICULOS A, MARCAS M, CATEGORIAS C, IMAGENES I WHERE A.IdMarca = M.Id AND A.IdCategoria = C.Id AND A.Id = I.IdArticulo";
+                comando.CommandText = "SELECT A.Id ID,A.Codigo, A.Nombre, A.Descripcion, M.Descripcion Marca, C.Descripcion Categoria, A.Precio, I.ImagenUrl Imagen, A.IdCategoria, A.IdMarca from ARTICULOS A, MARCAS M, CATEGORIAS C, IMAGENES I WHERE A.IdMarca = M.Id AND A.IdCategoria = C.Id AND A.Id = I.IdArticulo";
                 comando.Connection = conexion;
 
                 conexion.Open();
@@ -42,10 +42,12 @@ namespace Negocio
                     if (!(lector["Descripcion"] is DBNull))
                         aux.Descripcion = (string)lector["Descripcion"];
 
+                    aux.IdMarca = (int)lector["IdMarca"];
                     aux.Marcas = new Marcas();
                     if (!(lector["Marca"] is DBNull))
                         aux.Marcas.DescripcionMarca = (string)lector["Marca"];
 
+                    aux.IdCategoria = (int)lector["IdCategoria"];
                     aux.Categoria = new Categoria();
                     if (!(lector["Categoria"] is DBNull))
                         aux.Categoria.DescripcionCategoria = (string)lector["Categoria"];
@@ -82,9 +84,12 @@ namespace Negocio
                 datos.setearParametros("@Descripcion", nuevo.Descripcion);
                 datos.setearParametros("@IdMarca", nuevo.Marcas.IdMarca);
                 datos.setearParametros("@IdCategoria", nuevo.Categoria.IdCategoria);
-                datos.setearConsulta("INSERT INTO IMAGENES (ImagenUrl) VALUES (@ImagenUrl)");
-                datos.SetearParametros("@ImagenUrl", nueva.ImagenUrl);
                 datos.setearParametros("@Precio", nuevo.Precio);    
+
+                // Falta insertar el IdArticulo para poder setear el UrlImagen, no se logro traer el IdArticulo del registro que se esta cargando
+                //datos.setearConsulta("INSERT INTO IMAGENES (ImagenUrl) VALUES (@ImagenUrl)");
+                //datos.SetearParametros("@ImagenUrl", nueva.ImagenUrl);
+
                 datos.ejecutarAccion();
  
             }
@@ -125,7 +130,7 @@ namespace Negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                string consulta = "SELECT A.Id ID,A.Codigo, A.Nombre, A.Descripcion, M.Descripcion Marca, C.Descripcion Categoria, A.Precio, I.ImagenUrl Imagen from ARTICULOS A, MARCAS M, CATEGORIAS C, IMAGENES I WHERE A.IdMarca = M.Id AND A.IdCategoria = C.Id AND A.Id = I.IdArticulo and ";
+                string consulta = "SELECT A.Id ID,A.Codigo, A.Nombre, A.Descripcion, M.Descripcion Marca, C.Descripcion Categoria, A.Precio, I.ImagenUrl Imagen, A.IdCategoria, A.IdMarca from ARTICULOS A, MARCAS M, CATEGORIAS C, IMAGENES I WHERE A.IdMarca = M.Id AND A.IdCategoria = C.Id AND A.Id = I.IdArticulo and ";
 
                 if (campo == "Precio")
                 {
@@ -231,10 +236,12 @@ namespace Negocio
                     if (!(datos.Lector["Descripcion"] is DBNull))
                         aux.Descripcion = (string)datos.Lector["Descripcion"];
 
+                    aux.IdMarca = (int)datos.Lector["IdMarca"];
                     aux.Marcas = new Marcas();
                     if (!(datos.Lector["Marca"] is DBNull))
                         aux.Marcas.DescripcionMarca = (string)datos.Lector["Marca"];
 
+                    aux.IdCategoria = (int)datos.Lector["IdCategoria"];
                     aux.Categoria = new Categoria();
                     if (!(datos.Lector["Categoria"] is DBNull))
                         aux.Categoria.DescripcionCategoria = (string)datos.Lector["Categoria"];
@@ -252,6 +259,32 @@ namespace Negocio
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        public void modificar(Articulos articulo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("update ARTICULOS set Codigo = @Codigo, Nombre = @Nombre, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria, Precio = @Precio Where Id = @id");
+                datos.setearParametros("@Codigo", articulo.Codigo);
+                datos.setearParametros("@Nombre", articulo.Nombre);
+                datos.setearParametros("@Descripcion", articulo.Descripcion);
+                datos.setearParametros("@IdMarca", articulo.Marcas.IdMarca);
+                datos.setearParametros("@IdCategoria", articulo.Categoria.IdCategoria);
+                datos.setearParametros("@Precio", articulo.Precio);
+                datos.setearParametros("@id", articulo.IdArticulo);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
             }
         }
     }
