@@ -14,7 +14,8 @@ namespace TP_Articulos
 {
     public partial class frmAltaArticulo : Form
     {
-        private Articulos articulo = null;
+        Articulos articuloNuevo;
+        List<Imagenes> imagen = new List<Imagenes>();
         public frmAltaArticulo()
         {
             InitializeComponent();
@@ -22,48 +23,51 @@ namespace TP_Articulos
         public frmAltaArticulo(Articulos articulo)
         {
             InitializeComponent();
-            this.articulo = articulo;
+            this.articuloNuevo = articulo;
             Text = "Modificar Articulo";
         }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            ArticulosNegocio negocio = new ArticulosNegocio();
-            Imagenes Im = new Imagenes();
-            ImagenesNegocio imagenesNegocio = new ImagenesNegocio();
+            ArticulosNegocio aux = new ArticulosNegocio();
+            decimal precio;
 
             try
             {
-                if(articulo == null)
-                    articulo = new Articulos();
-
-                articulo.Codigo = txtCodigo.Text;
-                articulo.Nombre = txtNombre.Text;
-                articulo.Descripcion = txtDescripcion.Text;
-                articulo.Marcas = (Marcas)cbxMarca.SelectedItem;
-                articulo.Categoria = (Categoria)cbxCategoria.SelectedItem;
-                //Im.ImagenUrl = txbImagen.Text;
-                articulo.Precio = float.Parse(txbPrecio.Text);
-
-                if(articulo.IdArticulo != 0)
+                if (!ValidarDatos())
                 {
-                    negocio.modificar(articulo);
-                    MessageBox.Show("Modificado exitosamente");
-
-                }
-                else
-                {
-                    negocio.agregar(articulo, Im);
+                    articuloNuevo = new Articulos();
+                    articuloNuevo.Nombre = txtNombre.Text;
+                    articuloNuevo.Codigo = txtCodigo.Text;
+                    if (!string.IsNullOrEmpty(txbPrecio.Text))
+                    {
+                        if (decimal.TryParse(txbPrecio.Text, out precio))
+                        {
+                            Console.WriteLine("El precio es: " + precio);
+                        }
+                        else
+                        {
+                            Console.WriteLine("El valor ingresado no es válido.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Por favor ingrese un precio.");
+                    }
+                    articuloNuevo.Descripcion = txtDescripcion.Text;
+                    articuloNuevo.NombreMarca = (Marcas)cbxMarca.SelectedItem;
+                    articuloNuevo.TipoCategoria = (Categoria)cbxCategoria.SelectedItem;
+                    articuloNuevo.UrlImagen = imagen;
+                    aux.agregar(articuloNuevo);
                     MessageBox.Show("Agregado exitosamente");
+                    Close();
+
                 }
-                
-                Close();
             }
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.ToString());
+                throw;
             }
-
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -73,28 +77,12 @@ namespace TP_Articulos
 
         private void frmAltaArticulo_Load(object sender, EventArgs e)
         {
-
-            CatgoriaNegocio categoriaNegocio = new CatgoriaNegocio();
             MarcaNegocio marcaNegocio = new MarcaNegocio();
+            Categoria categoria = new Categoria();
             try
             {
-                cbxCategoria.DataSource = categoriaNegocio.listar();
-                cbxCategoria.ValueMember = "IdCategoria";
-                cbxCategoria.DisplayMember = "DescripcionCategoria";
                 cbxMarca.DataSource = marcaNegocio.listar();
-                cbxMarca.ValueMember = "IdMarca";
-                cbxMarca.DisplayMember = "DescripcionMarca";
-
-                if (articulo !=  null )
-                {
-                    txtCodigo.Text = articulo.Codigo;
-                    txtNombre.Text = articulo.Nombre;
-                    txtDescripcion.Text = articulo.Descripcion;
-                    txbPrecio.Text = articulo.Precio.ToString();
-                    cargarImagen(articulo.imagenes.ImagenUrl);
-                    cbxCategoria.SelectedValue = articulo.IdCategoria;
-                    cbxMarca.SelectedValue = articulo.IdMarca;
-                }//
+                cbxCategoria.DataSource = marcaNegocio.listar();
             }
             catch (Exception ex)
             {
@@ -117,6 +105,44 @@ namespace TP_Articulos
             {
                 pbxImagen.Load("https://i0.wp.com/sunrisedaycamp.org/wp-content/uploads/2020/10/placeholder.png?ssl=1");
             }
+        }
+
+        private bool ValidarDatos()
+        {
+            if (cbxCategoria.SelectedIndex < 0)
+
+                return true;
+
+
+            if (cbxMarca.SelectedIndex < 0)
+
+                return true;
+
+            if (string.IsNullOrEmpty(txtCodigo.Text) || string.IsNullOrEmpty(txtNombre.Text))
+                return true;
+            if (string.IsNullOrEmpty(txtDescripcion.Text) || string.IsNullOrEmpty(txtDescripcion.Text))
+                return true;
+            if (string.IsNullOrEmpty(txbPrecio.Text))
+            {
+                return true;
+            }
+            if (!VerificarNumeros())
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        private bool VerificarNumeros()
+        {
+            foreach (char c in txbPrecio.Text)
+            {
+                if (!(char.IsNumber(c)))
+                    return false;
+            }
+            return true;
         }
     }
 }
