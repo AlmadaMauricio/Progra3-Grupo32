@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dominio;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Negocio
 {
@@ -58,6 +59,11 @@ namespace Negocio
                     if (!(lector["Precio"] is DBNull))
                         aux.Precio = (float)(decimal)lector["Precio"];
 
+                    List<Imagenes> imagenes;
+                    imagenes = obtenerImagenes(aux.IdArticulo);
+                    if (imagenes.Count > 0)
+                        aux.UrlImagen = imagenes;
+
                     lista.Add(aux);
                 }
 
@@ -70,8 +76,40 @@ namespace Negocio
             }
 
         }
+        public List<Imagenes> obtenerImagenes(int id)
+        {
+            List<Imagenes> listadoImagenes = new List<Imagenes>();
+            AccesoDatos datos = new AccesoDatos();
+            datos.setearConsulta("Select I.Id, I.ImagenUrl, A.Id Articulo from IMAGENES I, ARTICULOS A Where A.Id = I.IdArticulo");
+            try
+            {
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    int articulo = (int)datos.Lector["Articulo"];
+                    if (articulo == id)
+                    {
+                        Imagenes imagen = new Imagenes();
+                        imagen.IdImagen = (int)datos.Lector["Id"];
+                        imagen.IdArticulo = articulo;
+                        imagen.ImagenUrl = (string)datos.Lector["ImagenUrl"];
+                        listadoImagenes.Add(imagen);
+                    }
+                }
+                return listadoImagenes;
+            }
+            catch (Exception ex)
+            {
 
-        public void agregar(Articulos nuevo, Imagenes nueva)
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void agregar(Articulos nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
 
@@ -84,12 +122,12 @@ namespace Negocio
                 datos.setearParametros("@Descripcion", nuevo.Descripcion);
                 datos.setearParametros("@IdMarca", nuevo.Marcas.IdMarca);
                 datos.setearParametros("@IdCategoria", nuevo.Categoria.IdCategoria);
-                datos.setearParametros("@Precio", nuevo.Precio);    
+                datos.setearParametros("@Precio", nuevo.Precio);
 
                 // Falta insertar el IdArticulo para poder setear el UrlImagen, no se logro traer el IdArticulo del registro que se esta cargando
                 //datos.setearConsulta("INSERT INTO IMAGENES (ImagenUrl) VALUES (@ImagenUrl)");
                 //datos.SetearParametros("@ImagenUrl", nueva.ImagenUrl);
-
+                AgregarImagenes(nuevo.UrlImagen);
                 datos.ejecutarAccion();
  
             }
@@ -103,7 +141,55 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+        private int obtenerUltimoIdArticulos()
+        {
+            AccesoDatos datos = new AccesoDatos();
+            datos.setearConsulta("select Id from Articulos");
+            int id = 0;
+            try
+            {
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    id = (int)datos.Lector["Id"];
+                }
+                return id;
+            }
+            catch (Exception ex)
+            {
 
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        private void AgregarImagenes(List<Imagenes> imagenes)
+        {
+            int id = obtenerUltimoIdArticulos();
+            foreach (Imagenes aux in imagenes)
+            {
+                AccesoDatos datos = new AccesoDatos();
+                datos.setearConsulta("Insert into Imagenes (IdArticulo,ImagenUrl) values(@idArticulo,@UrlImagen)");
+                datos.setearParametros("@idArticulo", id);
+                datos.setearParametros("@UrlImagen", aux.ImagenUrl);
+                try
+                {
+                    datos.ejecutarAccion();
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+                finally
+                {
+                    datos.cerrarConexion();
+                }
+            }
+
+        }
         public void eliminarArticulo(int id)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -280,6 +366,27 @@ namespace Negocio
             }
             catch (Exception ex)
             {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void InsertarImagenes(string url, int idArt)
+        {
+
+            AccesoDatos datos = new AccesoDatos();
+            datos.setearConsulta("Insert into Imagenes (IdArticulo,ImagenUrl) values(@idarticulo,@UrlImagen)");
+            datos.setearParametros("@idarticulo", idArt);
+            datos.setearParametros("@UrlImagen", url);
+            try
+            {
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
                 throw ex;
             }
             finally

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Dominio;
 using Negocio;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TP_Articulos
 {
@@ -53,9 +54,10 @@ namespace TP_Articulos
                     {
                         Console.WriteLine("Por favor ingrese un precio.");
                     }
+                    articuloNuevo.Precio = float.Parse(txbPrecio.Text);
                     articuloNuevo.Descripcion = txtDescripcion.Text;
-                    articuloNuevo.NombreMarca = (Marcas)cbxMarca.SelectedItem;
-                    articuloNuevo.TipoCategoria = (Categoria)cbxCategoria.SelectedItem;
+                    articuloNuevo.Marcas = (Marcas)cbxMarca.SelectedItem;
+                    articuloNuevo.Categoria = (Categoria)cbxCategoria.SelectedItem;
                     articuloNuevo.UrlImagen = imagen;
                     aux.agregar(articuloNuevo);
                     MessageBox.Show("Agregado exitosamente");
@@ -77,12 +79,12 @@ namespace TP_Articulos
 
         private void frmAltaArticulo_Load(object sender, EventArgs e)
         {
+            CatgoriaNegocio categoriaNegocio = new CatgoriaNegocio();
             MarcaNegocio marcaNegocio = new MarcaNegocio();
-            Categoria categoria = new Categoria();
             try
             {
+                cbxCategoria.DataSource = categoriaNegocio.listar();
                 cbxMarca.DataSource = marcaNegocio.listar();
-                cbxCategoria.DataSource = marcaNegocio.listar();
             }
             catch (Exception ex)
             {
@@ -143,6 +145,30 @@ namespace TP_Articulos
                     return false;
             }
             return true;
+        }
+
+        private void btnAgregarImagen_Click(object sender, EventArgs e)
+        {
+            Imagenes imagenes = new Imagenes();
+            try
+            {
+                imagenes.ImagenUrl = txbImagen.Text;
+                if (!(string.IsNullOrEmpty(txbImagen.Text)))
+                {
+                    imagen.Add(imagenes);
+                    txbImagen.Text = string.Empty;
+                    MessageBox.Show("Imagen agregada al articulo");
+                }
+                else
+                {
+                    MessageBox.Show("Por favor complete con una URL y luego presione el boton");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }
